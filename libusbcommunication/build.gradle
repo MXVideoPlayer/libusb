@@ -65,7 +65,7 @@ dependencies {
     testImplementation 'org.xenei:junit-contracts:0.1.7'
     testImplementation 'org.mockito:mockito-core:2.28.2'
 
-    api project(':libaums')
+    //api project(':libaums')
 }
 
 
