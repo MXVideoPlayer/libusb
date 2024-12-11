@@ -1,0 +1,9 @@
+VERS_1.0
+{
+# Visible functions
+global:
+    Java_*;
+# Hide everything else
+local:
+    *;
+};

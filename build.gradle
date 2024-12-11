@@ -1,0 +1,66 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext.kotlin_version = '1.8.0'
+    repositories {
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.4.2'
+
+        //classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+
+        classpath 'org.codehaus.groovy:groovy-all:2.4.15'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:1.8.10"
+        classpath "org.jacoco:org.jacoco.core:0.8.8"
+        classpath 'com.dicedmelon.gradle:jacoco-android:0.1.5'
+        classpath 'io.github.gradle-nexus:publish-plugin:1.3.0'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        maven {
+            allowInsecureProtocol = true
+            url 'http://mx.nexus.com:8098/nexus/content/repositories/public/'
+            credentials {
+                username "$System.env.MX_NEXUS_USER"
+                password "$System.env.MX_NEXUS_PW"
+            }
+        }
+        mavenCentral()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+    }
+}
+
+
+static def getBuildNumber() {
+    return System.getenv("BUILD_NUMBER") as Integer ?: 0
+}
+
+ext {
+    publishGroupId = 'com.mxplay.code'
+    publishVersion = "1.0.1.${getBuildNumber()}"
+    publishVersionCode = 1
+    publishScript = 'https://raw.githubusercontent.com/linbercsu/mavenPublisher/master/publish.gradle'
+    //please do not format this line, just change the real version of ndk.
+    //script will parse this line for ndk version.
+    ndkVersion="27.2.12479018"
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+apply plugin: 'io.github.gradle-nexus.publish-plugin'
+apply from: "${rootDir}/publish-root.gradle"

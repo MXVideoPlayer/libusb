@@ -1,0 +1,21 @@
+VERS_1.0
+{
+# Visible functions
+global:
+    libusb_set_option;
+    libusb_init;
+    libusb_strerror;
+    libusb_wrap_sys_device;
+    libusb_close;
+    libusb_exit;
+    libusb_detach_kernel_driver;
+    libusb_claim_interface;
+    libusb_bulk_transfer;
+    libusb_control_transfer;
+    libusb_reset_device;
+    libusb_clear_halt;
+    Java_*;
+# Hide everything else
+local:
+    *;
+};
